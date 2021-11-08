@@ -21,7 +21,9 @@ export interface INotionFaker {
     properties: Database.PropertyFakers;
   };
 
-  page: Page.PropertyFakers;
+  page: {
+    properties: Page.PropertyFakers;
+  };
 }
 
 export default class NotionFaker implements INotionFaker {
@@ -45,6 +47,8 @@ export default class NotionFaker implements INotionFaker {
       title: Database.title(this.faker),
       properties: Database.properties,
     };
-    this.page = Page.properties(this.faker);
+    this.page = {
+      properties: Page.properties(this.faker),
+    };
   }
 }

@@ -42,7 +42,7 @@ describe('create test page', () => {
   let fakeCover: ExternalValue;
 
   beforeAll(async () => {
-    fakeTitle = notionFakers.default.page.title()()();
+    fakeTitle = notionFakers.default.page.properties.title()()();
     fakeEmoji = notionFakers.default.icon.emoji();
     fakeCover = notionFakers.default.cover()();
 
@@ -191,7 +191,8 @@ describe('create pages with properties', () => {
       parent: {
         database_id: TEST_DATABASE_ID,
       },
-      properties: notionFakers.default.page.propertiesByScheme(scheme),
+      properties:
+        notionFakers.default.page.properties.propertiesByScheme(scheme),
       icon: fakeEmoji,
       cover: fakeCover,
     });
