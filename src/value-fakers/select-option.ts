@@ -1,7 +1,7 @@
-import {Get} from 'type-fest';
-import {PropertyValueOf} from '@/database';
-import {ArrayElement, MethodPaths} from '@/types';
-import {callWith, get} from '@/utils';
+import type {Get} from 'type-fest';
+import type {PropertyValueOf} from '../database';
+import type {ArrayElement, MethodPaths} from '../types';
+import {callWith, get} from '../utils';
 
 export type SelectOptionValue = ArrayElement<
   NonNullable<PropertyValueOf<'select'>['select']['options']>

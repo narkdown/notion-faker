@@ -1,4 +1,4 @@
-import {CreateDatabaseParameters} from '@notionhq/client/build/src/api-endpoints';
+import type {CreateDatabaseParameters} from '@notionhq/client/build/src/api-endpoints';
 
 export type IconValue = NonNullable<Required<CreateDatabaseParameters['icon']>>;
 

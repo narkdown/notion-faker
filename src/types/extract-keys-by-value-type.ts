@@ -1,4 +1,4 @@
-import {OptionalToUndefined} from '@younho9/types';
+import type {OptionalToUndefined} from '@younho9/types';
 
 export type ExtractKeysByValueType<
   ObjectType extends Record<string, unknown>,

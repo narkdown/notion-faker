@@ -1,7 +1,7 @@
-import {Get} from 'type-fest';
-import {IconValue} from './emoji';
-import {MethodPaths} from '@/types';
-import {callWith, get} from '@/utils';
+import type {Get} from 'type-fest';
+import type {MethodPaths} from '../types';
+import {callWith, get} from '../utils';
+import type {IconValue} from './emoji';
 
 export type ExternalValue = Extract<IconValue, {type: 'external'}>;
 

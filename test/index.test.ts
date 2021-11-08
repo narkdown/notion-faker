@@ -2,14 +2,14 @@
 import process from 'node:process';
 import dotenv from 'dotenv';
 import {Client as NotionClient} from '@notionhq/client';
-import {
+import type {
   CreateDatabaseResponse,
   CreatePageResponse,
 } from '@notionhq/client/build/src/api-endpoints';
 import NotionFaker from '@/index';
 import * as Page from '@/page';
 import * as Database from '@/database';
-import {EmojiValue, ExternalValue} from '@/value-fakers';
+import type {EmojiValue, ExternalValue} from '@/value-fakers';
 
 dotenv.config();
 

@@ -1,4 +1,4 @@
-import {ExtractKeysByValueType} from './extract-keys-by-value-type';
+import type {ExtractKeysByValueType} from './extract-keys-by-value-type';
 
 export type SupportedFakerNamespace = Exclude<
   keyof Faker.FakerStatic,

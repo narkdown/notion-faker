@@ -1,6 +1,6 @@
 import {createFaker} from '@/create-faker';
 import * as Database from '@/database';
-import {TextValue} from '@/value-fakers';
+import type {TextValue} from '@/value-fakers';
 
 describe('Database.TitleFaker', () => {
   let faker: Faker.FakerStatic;

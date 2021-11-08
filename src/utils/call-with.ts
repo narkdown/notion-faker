@@ -1,4 +1,4 @@
-import {AnyFunction} from '@/types/any-function';
+import type {AnyFunction} from '../types/any-function';
 
 export const callWith = <
   FunctionType extends AnyFunction<ReturnType<FunctionType>>,

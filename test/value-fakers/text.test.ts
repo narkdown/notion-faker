@@ -1,7 +1,7 @@
-import {Get} from 'type-fest';
+import type {Get} from 'type-fest';
 import {text, TextFaker, TextValue, TextOptions} from '@/value-fakers';
 import {createFaker} from '@/create-faker';
-import {MethodPaths} from '@/types';
+import type {MethodPaths} from '@/types';
 
 let faker: Faker.FakerStatic;
 let textFaker: TextFaker;

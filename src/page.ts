@@ -1,11 +1,11 @@
-import {
+import type {
   CreatePageParameters,
   GetDatabaseResponse,
 } from '@notionhq/client/build/src/api-endpoints';
-import {Get, ValueOf} from 'type-fest';
+import type {Get, ValueOf} from 'type-fest';
 import {get, callWith} from './utils';
-import {PropertyType as DatabasePropertyType} from './database';
-import {MethodPaths} from './types';
+import type {PropertyType as DatabasePropertyType} from './database';
+import type {MethodPaths} from './types';
 import {external, selectOption, text, TextOptions} from './value-fakers';
 
 export type AllPropertyValue = Extract<

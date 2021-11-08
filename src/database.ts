@@ -1,6 +1,6 @@
-import {CreateDatabaseParameters} from '@notionhq/client/build/src/api-endpoints';
-import {Except, Get, SetRequired, ValueOf} from 'type-fest';
-import {MethodPaths} from './types';
+import type {CreateDatabaseParameters} from '@notionhq/client/build/src/api-endpoints';
+import type {Except, Get, SetRequired, ValueOf} from 'type-fest';
+import type {MethodPaths} from './types';
 import {text, TextOptions, TextValue} from './value-fakers';
 
 export type TitleFaker = <MethodPath extends MethodPaths['text']>(

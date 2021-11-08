@@ -1,7 +1,7 @@
-import {CreateDatabaseParameters} from '@notionhq/client/build/src/api-endpoints';
-import {Get} from 'type-fest';
-import {ArrayElement, MethodPaths} from '@/types';
-import {callWith, get} from '@/utils';
+import type {CreateDatabaseParameters} from '@notionhq/client/build/src/api-endpoints';
+import type {Get} from 'type-fest';
+import type {ArrayElement, MethodPaths} from '../types';
+import {callWith, get} from '../utils';
 
 export type TextValue = Extract<
   ArrayElement<NonNullable<CreateDatabaseParameters['title']>>,
