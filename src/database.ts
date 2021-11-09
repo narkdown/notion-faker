@@ -75,7 +75,7 @@ export const properties: PropertyFakers = Object.fromEntries(
           property,
           (options: PropertyOptions['relation']) => ({
             type: property,
-            [property]: options ?? {},
+            [property]: options,
           }),
         ];
       case 'rollup':
@@ -83,7 +83,7 @@ export const properties: PropertyFakers = Object.fromEntries(
           property,
           (options: PropertyOptions['rollup']) => ({
             type: property,
-            [property]: options ?? {},
+            [property]: options,
           }),
         ];
       default:

@@ -37,7 +37,8 @@
     "lint": "xo",
     "prepare": "yarn git:install-hooks",
     "release": "npx np",
-    "test": "xo && jest"
+    "test": "xo && jest",
+    "test:coverage": "jest --coverage"
   },
   "commitlint": {
     "extends": "@commitlint/config-conventional"
