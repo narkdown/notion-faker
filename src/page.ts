@@ -30,10 +30,14 @@ export type PropertyValueOf<PropertyKey extends PropertyType> = Extract<
   {type: PropertyKey}
 >;
 
-export type PropertyOptions = {
-  title: TextOptions;
+export type RichTextOptions = TextOptions & {
+  textCount?: number;
+};
 
-  rich_text: TextOptions;
+export type PropertyOptions = {
+  title: RichTextOptions;
+
+  rich_text: RichTextOptions;
 
   select: Extract<
     ValueOf<GetDatabaseResponse['properties']>,
@@ -123,15 +127,21 @@ export const properties = (faker: Faker.FakerStatic): PropertyFakers => ({
     (methodPath) =>
     (...args) =>
     (options) =>
-      createPropertyRequest.title([text(faker)(methodPath)(...args)(options)]),
+      createPropertyRequest.title(
+        Array.from({length: options?.textCount ?? 1}).map(() =>
+          text(faker)(methodPath)(...args)(options),
+        ),
+      ),
 
   rich_text:
     (methodPath) =>
     (...args) =>
     (options) =>
-      createPropertyRequest.rich_text([
-        text(faker)(methodPath)(...args)(options),
-      ]),
+      createPropertyRequest.rich_text(
+        Array.from({length: options?.textCount ?? 1}).map(() =>
+          text(faker)(methodPath)(...args)(options),
+        ),
+      ),
 
   number:
     (methodPath) =>

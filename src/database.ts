@@ -1,20 +1,23 @@
 import type {CreateDatabaseParameters} from '@notionhq/client/build/src/api-endpoints';
 import type {Except, Get, SetRequired, ValueOf} from 'type-fest';
+import type {RichTextOptions} from './page';
 import type {MethodPaths} from './types';
-import {text, TextOptions, TextValue} from './value-fakers';
+import {text, TextValue} from './value-fakers';
 
 export type TitleFaker = <MethodPath extends MethodPaths['text']>(
   methodPath?: MethodPath,
 ) => (
   ...args: Parameters<Get<Faker.FakerStatic, MethodPath>>
-) => (options?: TextOptions) => TextValue[];
+) => (options?: RichTextOptions) => TextValue[];
 
 export const title =
   (faker: Faker.FakerStatic): TitleFaker =>
   (methodPath) =>
   (...args) =>
   (options) =>
-    [text(faker)(methodPath)(...args)(options)];
+    Array.from({length: options?.textCount ?? 1}).map(() =>
+      text(faker)(methodPath)(...args)(options),
+    );
 
 export type PropertyValues = Required<
   ValueOf<CreateDatabaseParameters['properties']>
