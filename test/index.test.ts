@@ -6,7 +6,7 @@ import type {
   CreateDatabaseResponse,
   CreatePageResponse,
 } from '@notionhq/client/build/src/api-endpoints';
-import NotionFaker from '@/index';
+import {NotionFaker} from '@/index';
 import * as Page from '@/page';
 import * as Database from '@/database';
 import type {EmojiValue, ExternalValue} from '@/value-fakers';

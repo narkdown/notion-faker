@@ -26,7 +26,7 @@ export interface INotionFaker {
   };
 }
 
-export default class NotionFaker implements INotionFaker {
+export class NotionFaker implements INotionFaker {
   public icon: INotionFaker['icon'];
   public cover: INotionFaker['cover'];
   public database: INotionFaker['database'];
