@@ -266,17 +266,25 @@ export type CreatePropertyRequest = {
 };
 
 export const SUPPORTED_PROPERTIES: PropertyType[] = [
-  'number',
   'title',
+  'rich_text',
+  'number',
   'select',
   'multi_select',
-  'rich_text',
-  'url',
+  'date',
   'files',
+  'checkbox',
+  'url',
   'email',
   'phone_number',
-  'date',
-  'checkbox',
+  // 'formula',
+  // 'relation',
+  // 'rollup',
+  // 'people',
+  // 'created_by',
+  // 'created_time',
+  // 'last_edited_by',
+  // 'last_edited_time',
 ];
 
 export const createPropertyRequest = Object.fromEntries(
