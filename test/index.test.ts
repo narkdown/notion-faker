@@ -13,12 +13,13 @@ import type {EmojiValue, ExternalValue} from '@/value-fakers';
 
 dotenv.config();
 
-let notionFakers: Record<string, NotionFaker>;
+let notionFaker: NotionFaker;
 let notion: NotionClient;
 let NOTION_API_KEY: string;
 let ENTRY_POINT_PAGE_ID: string;
 let RELATION_DATABASE_ID: string;
 let TEST_PAGE_ID: string;
+let SETUP_DATABASE_ID: string;
 let TEST_DATABASE_ID: string;
 
 beforeAll(async () => {
@@ -28,11 +29,7 @@ beforeAll(async () => {
 
   notion = new NotionClient({auth: NOTION_API_KEY});
 
-  notionFakers = {
-    default: new NotionFaker({seedValue}),
-    en: new NotionFaker({seedValue, locale: 'en'}),
-    ko: new NotionFaker({seedValue, locale: 'ko'}),
-  };
+  notionFaker = new NotionFaker({seedValue});
 });
 
 describe('create test page', () => {
@@ -42,9 +39,9 @@ describe('create test page', () => {
   let fakeCover: ExternalValue;
 
   beforeAll(async () => {
-    fakeTitle = notionFakers.default.page.properties.title()()();
-    fakeEmoji = notionFakers.default.icon.emoji();
-    fakeCover = notionFakers.default.cover()();
+    fakeTitle = notionFaker.page.properties.title()()();
+    fakeEmoji = notionFaker.icon.emoji();
+    fakeCover = notionFaker.cover()();
 
     response = await notion.pages.create({
       parent: {
@@ -96,51 +93,101 @@ describe('create test database', () => {
       parent: {
         page_id: TEST_PAGE_ID,
       },
-      title: notionFakers.default.database.title()()(),
+      title: notionFaker.database.title()()(),
       properties: {
-        title: notionFakers.default.database.properties.title(),
+        title: notionFaker.database.properties.title(),
       },
     });
 
     RELATION_DATABASE_ID = relationDatabaseResponse.id;
 
-    fakeEmoji = notionFakers.default.icon.emoji();
-    fakeCover = notionFakers.default.cover()();
+    fakeEmoji = notionFaker.icon.emoji();
+    fakeCover = notionFaker.cover()();
 
     response = await notion.databases.create({
       parent: {
         page_id: TEST_PAGE_ID,
       },
-      title: notionFakers.default.database.title()()(),
+      title: notionFaker.database.title()()(),
       properties: {
-        title: notionFakers.default.database.properties.title(),
-        rich_text: notionFakers.default.database.properties.rich_text(),
-        number: notionFakers.default.database.properties.number(),
-        select: notionFakers.default.database.properties.select(),
-        multi_select: notionFakers.default.database.properties.multi_select(),
-        date: notionFakers.default.database.properties.date(),
-        files: notionFakers.default.database.properties.files(),
-        checkbox: notionFakers.default.database.properties.checkbox(),
-        url: notionFakers.default.database.properties.url(),
-        email: notionFakers.default.database.properties.email(),
-        phone_number: notionFakers.default.database.properties.phone_number(),
-        formula: notionFakers.default.database.properties.formula(),
-        relation: notionFakers.default.database.properties.relation({
+        title: notionFaker.database.properties.title(),
+        rich_text: notionFaker.database.properties.rich_text(),
+        number: notionFaker.database.properties.number(),
+        select: notionFaker.database.properties.select(),
+        multi_select: notionFaker.database.properties.multi_select(),
+        date: notionFaker.database.properties.date(),
+        files: notionFaker.database.properties.files(),
+        checkbox: notionFaker.database.properties.checkbox(),
+        url: notionFaker.database.properties.url(),
+        email: notionFaker.database.properties.email(),
+        phone_number: notionFaker.database.properties.phone_number(),
+        formula: notionFaker.database.properties.formula(),
+        relation: notionFaker.database.properties.relation({
           database_id: RELATION_DATABASE_ID,
         }),
-        rollup: notionFakers.default.database.properties.rollup({
+        rollup: notionFaker.database.properties.rollup({
           rollup_property_name: 'title',
           relation_property_name: 'relation',
           function: 'count',
         }),
-        people: notionFakers.default.database.properties.people(),
-        created_by: notionFakers.default.database.properties.created_by(),
-        created_time: notionFakers.default.database.properties.created_time(),
-        last_edited_by:
-          notionFakers.default.database.properties.last_edited_by(),
-        last_edited_time:
-          notionFakers.default.database.properties.last_edited_time(),
+        people: notionFaker.database.properties.people(),
+        created_by: notionFaker.database.properties.created_by(),
+        created_time: notionFaker.database.properties.created_time(),
+        last_edited_by: notionFaker.database.properties.last_edited_by(),
+        last_edited_time: notionFaker.database.properties.last_edited_time(),
       },
+      icon: fakeEmoji,
+      cover: fakeCover,
+    });
+
+    SETUP_DATABASE_ID = response.id;
+  });
+
+  it('has properties', async () => {
+    for (const propertyKey of Database.SUPPORTED_PROPERTIES) {
+      // NOTE: notion database API response does not have formula.
+      if (propertyKey === 'formula') continue;
+
+      expect(response.properties).toHaveProperty(propertyKey);
+      expect(response.properties[propertyKey].type).toBe(propertyKey);
+      expect(response.properties[propertyKey]).toHaveProperty(propertyKey);
+    }
+  });
+
+  it('icon is equal to fake emoji', async () => {
+    expect(response.icon?.type).toBe('emoji');
+    expect(response.icon).toHaveProperty('emoji');
+
+    expect(response.icon).toEqual(fakeEmoji);
+  });
+
+  it('cover is equal to fake emoji', async () => {
+    expect(response.cover?.type).toBe('external');
+    expect(response.cover).toHaveProperty('external');
+
+    expect(response.cover).toEqual(fakeCover);
+  });
+});
+
+describe('create test database by scheme', () => {
+  let response: CreateDatabaseResponse;
+  let fakeEmoji: EmojiValue;
+  let fakeCover: ExternalValue;
+
+  beforeAll(async () => {
+    fakeEmoji = notionFaker.icon.emoji();
+    fakeCover = notionFaker.cover()();
+
+    const {properties: scheme} = await notion.databases.retrieve({
+      database_id: SETUP_DATABASE_ID,
+    });
+
+    response = await notion.databases.create({
+      parent: {
+        page_id: TEST_PAGE_ID,
+      },
+      title: notionFaker.database.title()()(),
+      properties: notionFaker.database.properties.propertiesByScheme(scheme),
       icon: fakeEmoji,
       cover: fakeCover,
     });
@@ -180,8 +227,8 @@ describe('create pages with properties', () => {
   let fakeCover: ExternalValue;
 
   beforeAll(async () => {
-    fakeEmoji = notionFakers.default.icon.emoji();
-    fakeCover = notionFakers.default.cover()();
+    fakeEmoji = notionFaker.icon.emoji();
+    fakeCover = notionFaker.cover()();
 
     const {properties: scheme} = await notion.databases.retrieve({
       database_id: TEST_DATABASE_ID,
@@ -191,8 +238,7 @@ describe('create pages with properties', () => {
       parent: {
         database_id: TEST_DATABASE_ID,
       },
-      properties:
-        notionFakers.default.page.properties.propertiesByScheme(scheme),
+      properties: notionFaker.page.properties.propertiesByScheme(scheme),
       icon: fakeEmoji,
       cover: fakeCover,
     });

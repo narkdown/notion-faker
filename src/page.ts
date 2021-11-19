@@ -119,7 +119,7 @@ export type PropertyFakers = {
 
   propertiesByScheme: (
     propertyScheme: GetDatabaseResponse['properties'],
-  ) => PropertyValues;
+  ) => Record<string, PropertyValues>;
 };
 
 export const properties = (faker: Faker.FakerStatic): PropertyFakers => ({
@@ -258,7 +258,7 @@ export const properties = (faker: Faker.FakerStatic): PropertyFakers => ({
           }
         })
         .filter((array) => array.length > 0),
-    ) as PropertyValues,
+    ) as Record<string, PropertyValues>,
 });
 
 export type CreatePropertyRequest = {
