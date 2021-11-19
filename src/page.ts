@@ -15,18 +15,18 @@ export type AllPropertyValue = Extract<
   }
 >['properties'];
 
-export type PropertyValue = Extract<
+export type PropertyValues = Extract<
   Required<ValueOf<AllPropertyValue>>,
   {type: DatabasePropertyType}
 >;
 
 export type PropertyType = Exclude<
-  PropertyValue['type'],
+  PropertyValues['type'],
   'relation' | 'people'
 >;
 
 export type PropertyValueOf<PropertyKey extends PropertyType> = Extract<
-  PropertyValue,
+  PropertyValues,
   {type: PropertyKey}
 >;
 
@@ -119,7 +119,7 @@ export type PropertyFakers = {
 
   propertiesByScheme: (
     propertyScheme: GetDatabaseResponse['properties'],
-  ) => PropertyValue;
+  ) => PropertyValues;
 };
 
 export const properties = (faker: Faker.FakerStatic): PropertyFakers => ({
@@ -258,7 +258,7 @@ export const properties = (faker: Faker.FakerStatic): PropertyFakers => ({
           }
         })
         .filter((array) => array.length > 0),
-    ) as PropertyValue,
+    ) as PropertyValues,
 });
 
 export type CreatePropertyRequest = {
