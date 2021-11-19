@@ -1,9 +1,9 @@
-import type {Get} from 'type-fest';
+import type {Get, IterableElement} from 'type-fest';
 import type {PropertyValueOf} from '../database';
-import type {ArrayElement, MethodPaths} from '../types';
+import type {MethodPaths} from '../types';
 import {callWith, get} from '../utils';
 
-export type SelectOptionValue = ArrayElement<
+export type SelectOptionValue = IterableElement<
   NonNullable<PropertyValueOf<'select'>['select']['options']>
 >;
 

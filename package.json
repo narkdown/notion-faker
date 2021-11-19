@@ -65,7 +65,7 @@
   "dependencies": {
     "@notionhq/client": "0.4.4",
     "@types/faker": "5.5.9",
-    "@younho9/types": "0.11.2",
+    "@younho9/types": "0.13.0",
     "faker": "5.5.3",
     "lodash.get": "4.4.2",
     "type-fest": "2.5.1"

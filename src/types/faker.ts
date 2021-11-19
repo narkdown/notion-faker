@@ -1,4 +1,4 @@
-import type {ExtractKeysByValueType} from './extract-keys-by-value-type';
+import {ConditionalKeys} from 'type-fest';
 
 export type SupportedFakerNamespace = Exclude<
   keyof Faker.FakerStatic,
@@ -17,7 +17,7 @@ export type FindFakerMethodPaths<
   FunctionType extends () => void,
 > = Namespace extends SupportedFakerNamespace
   ? `${Namespace}.${Exclude<
-      ExtractKeysByValueType<Faker.FakerStatic[Namespace], FunctionType>,
+      ConditionalKeys<Faker.FakerStatic[Namespace], FunctionType>,
       symbol
     >}`
   : never;

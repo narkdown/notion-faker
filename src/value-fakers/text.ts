@@ -1,10 +1,10 @@
 import type {CreateDatabaseParameters} from '@notionhq/client/build/src/api-endpoints';
-import type {Get} from 'type-fest';
-import type {ArrayElement, MethodPaths} from '../types';
+import type {Get, IterableElement} from 'type-fest';
+import type {MethodPaths} from '../types';
 import {callWith, get} from '../utils';
 
 export type TextValue = Extract<
-  ArrayElement<NonNullable<CreateDatabaseParameters['title']>>,
+  IterableElement<NonNullable<CreateDatabaseParameters['title']>>,
   {type?: 'text'}
 >;
 
