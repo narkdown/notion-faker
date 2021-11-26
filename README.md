@@ -2,6 +2,7 @@
 
 > Generate massive amounts of fake contextual data for Notion
 
+[![codecov](https://codecov.io/gh/narkdown/notion-faker/branch/main/graph/badge.svg)](https://codecov.io/gh/narkdown/notion-faker)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/xojs/xo)
 [![Version: v0.5.0](https://img.shields.io/badge/Version-v0.5.0-green)](https://github.com/narkdown/notion-faker/releases/tag/v0.5.0)
 [![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
