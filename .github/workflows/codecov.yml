@@ -1,0 +1,23 @@
+name: codecov
+
+on: [push]
+
+jobs:
+  codecov:
+    name: codecov
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+
+      - name: Generate coverage report
+        run: |
+          yarn install && yarn codecov
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          ENTRY_POINT_PAGE_ID: ${{ secrets.ENTRY_POINT_PAGE_ID }}
+
+      - uses: codecov/codecov-action@v2
+        with:
+          verbose: true
